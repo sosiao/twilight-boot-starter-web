@@ -1,0 +1,4 @@
+gelato:
+  texture:
+    enabled: true
+    packages: com.yizlan.twilight.web.controller.order,com.yizlan.twilight.web.controller.personal
