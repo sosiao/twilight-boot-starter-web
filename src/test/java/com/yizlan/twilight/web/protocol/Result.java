@@ -81,10 +81,10 @@ public class Result<T> implements TernaryResult<String, T>, Serializable {
 
     @Override
     public Result<T> failure(Object... args) {
-        return failure(null, null, args);
+        return build(Boolean.FALSE, null, null,null);
     }
 
-    public Result<T> failure(String code, String message, Object... args) {
+    public static <T> Result<T> failure(String code, String message, Object... args) {
         return build(Boolean.FALSE, code, message, null);
     }
 

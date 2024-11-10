@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package com.yizlan.twilight.web.controller.personal;
+package com.yizlan.twilight.web.advice;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.yizlan.twilight.web.protocol.Result;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@RestController
-public class AccountController {
+@RestControllerAdvice
+public class GlobalExceptionHandler {
 
-    @GetMapping("/personal/account")
-    public String accountInfo(){
-        throw new RuntimeException("无权查看.");
+    @ExceptionHandler(RuntimeException.class)
+    public Result<Object> handleException(RuntimeException e) {
+        return Result.failure("500", e.getMessage());
     }
 
 }

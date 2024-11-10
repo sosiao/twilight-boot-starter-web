@@ -18,6 +18,7 @@ package com.yizlan.twilight.web;
 
 import com.yizlan.gelato.canonical.protocol.TerResult;
 import com.yizlan.twilight.web.actuate.HealthController;
+import com.yizlan.twilight.web.advice.GlobalExceptionHandler;
 import com.yizlan.twilight.web.advice.GlobalResponseHandler;
 import com.yizlan.twilight.web.autoconfigure.texture.HarmonyAutoConfiguration;
 import com.yizlan.twilight.web.autoconfigure.texture.HarmonyProperties;
@@ -43,7 +44,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import javax.annotation.Resource;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest(classes = {HarmonyAutoConfiguration.class, TwilightConfig.class, GlobalResponseHandler.class})
+@SpringBootTest(classes = {HarmonyAutoConfiguration.class, TwilightConfig.class})
 @TestPropertySource("classpath:application.yaml")
 public class HarmonyApplicationTest {
 
@@ -72,7 +73,8 @@ public class HarmonyApplicationTest {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(homeController, accountController, bookController, healthController)
-                .setControllerAdvice(new GlobalResponseHandler(terResult, harmonyProperties))
+                .setControllerAdvice(new GlobalResponseHandler(terResult, harmonyProperties),
+                        new GlobalExceptionHandler())
                 .build();
     }
 
@@ -82,16 +84,22 @@ public class HarmonyApplicationTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/home")
                         .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("home"))
                 .andDo(MockMvcResultHandlers.print());
-        // echo `{"success":true,"code":"code","message":"????","data":"book"}`
+        // echo `{"success":true,"code":"code","message":"操作成功","data":"book"}`
         mockMvc.perform(MockMvcRequestBuilders.get("/order/book")
                         .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(true))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.data").value("book"))
                 .andDo(MockMvcResultHandlers.print());
-        // echo `{"success":true,"code":"code","message":"????","data":"account"}`
+        // echo `{"success":false,"code":"500","message":"无权查看.","data":null}`
         mockMvc.perform(MockMvcRequestBuilders.get("/personal/account")
                         .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.success").value(false))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.code").value("500"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value("无权查看."))
                 .andDo(MockMvcResultHandlers.print());
         // echo `It's ok!`
         mockMvc.perform(MockMvcRequestBuilders.get("/health")

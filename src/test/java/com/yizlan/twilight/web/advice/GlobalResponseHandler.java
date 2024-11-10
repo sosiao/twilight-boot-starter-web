@@ -47,7 +47,7 @@ public class GlobalResponseHandler extends AbstractGlobalResponseBodyAdvice<Stri
     public Object beforeBodyWrite(Object data, MethodParameter returnType, MediaType selectedContentType,
                                   Class<? extends HttpMessageConverter<?>> selectedConverterType,
                                   ServerHttpRequest request, ServerHttpResponse response) {
-        response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        response.getHeaders().setContentType(MediaType.APPLICATION_JSON_UTF8);
         if (returnType.getGenericParameterType().equals(String.class)) {
 
             try {
