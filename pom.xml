@@ -6,11 +6,11 @@
 
     <groupId>com.yizlan</groupId>
     <artifactId>twilight-boot-starter-web</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
-    <description>Starter for using Gelato Canonical</description>
+    <description>Starter for using Gelato Canonical.</description>
     <url>https://atomgit.com/sosiao/twilight-boot-starter-web</url>
 
     <licenses>
