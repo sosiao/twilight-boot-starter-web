@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.yizlan.twilight.web.autoconfigure.texture.HarmonyAutoConfiguration

@@ -1,0 +1,21 @@
+{
+  "groups": [
+    {
+      "name": "gelato.texture",
+      "type": "com.yizlan.twilight.web.autoconfigure.texture.HarmonyProperties",
+      "sourceType": "com.yizlan.twilight.web.autoconfigure.texture.HarmonyProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "gelato.texture.enabled",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.yizlan.twilight.web.autoconfigure.texture.HarmonyProperties"
+    },
+    {
+      "name": "gelato.texture.packages",
+      "type": "java.lang.String[]",
+      "sourceType": "com.yizlan.twilight.web.autoconfigure.texture.HarmonyProperties"
+    }
+  ]
+}
