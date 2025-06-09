@@ -75,16 +75,16 @@ public class Result<T> implements TernaryResult<String, T>, Serializable {
     }
 
     @Override
-    public Result<T> success(Object... args) {
+    public Result<T> success() {
         return build(Boolean.TRUE, "code", message, null);
     }
 
     @Override
-    public Result<T> failure(Object... args) {
+    public Result<T> failure() {
         return build(Boolean.FALSE, null, null,null);
     }
 
-    public static <T> Result<T> failure(String code, String message, Object... args) {
+    public static <T> Result<T> failure(String code, String message) {
         return build(Boolean.FALSE, code, message, null);
     }
 
@@ -104,14 +104,6 @@ public class Result<T> implements TernaryResult<String, T>, Serializable {
         return new Result<>(success, code, message, data);
     }
 
-    /**
-     * 构建返回结果
-     *
-     * @param success
-     * @param msg
-     * @param data
-     * @return
-     */
     private static <T> Result<T> build(Boolean success, String msg, T data) {
         return build(success, msg, null, data);
     }
