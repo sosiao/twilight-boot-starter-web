@@ -40,17 +40,17 @@ import java.util.stream.Stream;
  * @author Zen Gershon
  * @since 1.0
  */
-public abstract class AbstractGlobalResponseBodyAdvice<T extends Comparable<T> & Serializable,
-        U extends Comparable<U> & Serializable, S, Q> implements ResponseBodyAdvice<Q> {
+public abstract class AbstractGlobalResponseBodyAdvice<P extends TerResult<P, T, U, S>,
+        T extends Comparable<T> & Serializable, U extends Comparable<U> & Serializable, S, Q> implements ResponseBodyAdvice<Q> {
 
     private final HarmonyProperties harmonyProperties;
 
-    protected final TerResult<T, U, S> terResult;
+    protected final P protocol;
 
-    protected AbstractGlobalResponseBodyAdvice(TerResult<T, U, S> terResult, HarmonyProperties harmonyProperties) {
-        Assert.notNull(terResult, "TerResult must not be null");
+    protected AbstractGlobalResponseBodyAdvice(P protocol, HarmonyProperties harmonyProperties) {
+        Assert.notNull(protocol, "Protocol must not be null");
         Assert.notNull(harmonyProperties, "HarmonyProperties must not be null");
-        this.terResult = terResult;
+        this.protocol = protocol;
         this.harmonyProperties = harmonyProperties;
     }
 
@@ -61,7 +61,7 @@ public abstract class AbstractGlobalResponseBodyAdvice<T extends Comparable<T> &
         boolean emptyPackage = ObjectUtils.isEmpty(packages);
         boolean intercept = emptyPackage || Stream.of(packages).anyMatch(p -> controllerType.getName().startsWith(p));
 
-        return harmonyProperties.isEnabled() && intercept && !TerResult.class.isAssignableFrom(returnType.getParameterType());
+        return harmonyProperties.isEnabled() && intercept && !protocol.getClass().isAssignableFrom(returnType.getParameterType());
     }
 
 }

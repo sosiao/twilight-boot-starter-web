@@ -16,7 +16,6 @@
 
 package com.yizlan.twilight.web;
 
-import com.yizlan.gelato.canonical.protocol.TerResult;
 import com.yizlan.twilight.web.actuate.HealthController;
 import com.yizlan.twilight.web.advice.GlobalExceptionHandler;
 import com.yizlan.twilight.web.advice.GlobalResponseHandler;
@@ -26,6 +25,7 @@ import com.yizlan.twilight.web.config.TwilightConfig;
 import com.yizlan.twilight.web.controller.HomeController;
 import com.yizlan.twilight.web.controller.order.BookController;
 import com.yizlan.twilight.web.controller.personal.AccountController;
+import com.yizlan.twilight.web.protocol.Result;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -61,7 +61,7 @@ public class HarmonyApplicationTest {
     private HealthController healthController;
 
     @Resource
-    private TerResult<String, String, Object> terResult;
+    private Result<Object> protocol;
 
     @Resource
     private HarmonyProperties harmonyProperties;
@@ -73,7 +73,7 @@ public class HarmonyApplicationTest {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(homeController, accountController, bookController, healthController)
-                .setControllerAdvice(new GlobalResponseHandler(terResult, harmonyProperties),
+                .setControllerAdvice(new GlobalResponseHandler(protocol, harmonyProperties),
                         new GlobalExceptionHandler())
                 .build();
     }
