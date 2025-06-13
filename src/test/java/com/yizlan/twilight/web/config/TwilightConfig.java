@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 public class TwilightConfig {
 
     @Bean
-    public Result<Object> terResult() {
+    public Result<Object> protocol() {
         return new Result<>();
     }
 
