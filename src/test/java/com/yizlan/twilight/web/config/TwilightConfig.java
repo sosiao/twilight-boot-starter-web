@@ -16,7 +16,6 @@
 
 package com.yizlan.twilight.web.config;
 
-import com.yizlan.gelato.canonical.protocol.TerResult;
 import com.yizlan.twilight.web.protocol.Result;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,7 +24,7 @@ import org.springframework.context.annotation.Configuration;
 public class TwilightConfig {
 
     @Bean
-    public TerResult<String,String,Object> terResult() {
+    public Result<Object> protocol() {
         return new Result<>();
     }
 

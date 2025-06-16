@@ -21,7 +21,7 @@ import com.yizlan.gelato.canonical.protocol.TernaryResult;
 
 import java.io.Serializable;
 
-public class Result<T> implements TernaryResult<String, T>, Serializable {
+public class Result<T> implements TernaryResult<Result<T>,String, T>, Serializable {
     private static final long serialVersionUID = 1L;
 
     private Boolean success = false;
@@ -68,6 +68,11 @@ public class Result<T> implements TernaryResult<String, T>, Serializable {
     @Override
     public void setData(T data) {
         this.data = data;
+    }
+
+    @Override
+    public Result<T> self() {
+        return this;
     }
 
     public static <T> Result<T> success(String msg, T data) {
